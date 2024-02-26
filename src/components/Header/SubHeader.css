@@ -1,0 +1,14 @@
+@media screen and (max-width: 768px) {
+	.SubHeader{
+		height: 8%;
+		background-color: #E6E1EF;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-left: 2%;
+	}
+	.text{
+		font-weight: bold;
+		color: black;
+	}
+}

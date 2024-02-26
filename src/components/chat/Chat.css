@@ -1,0 +1,113 @@
+.ChatContainer{
+	padding-top: 23%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	height: 91%;
+}
+
+.ChatLog{
+	overflow-y: scroll;
+	min-height: 0;
+	max-height: 100%;
+}
+
+.ChattingHeader{
+	height: 8%;
+	width: 100%;
+	background-color: #E6E1EF;
+	display: flex;
+	align-items:center;
+	justify-content: space-between;
+	padding-left: 2%;
+	padding-right: 8%;
+	position: fixed;
+	top: 0%;
+}
+
+.AiChat{
+	width: 95%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 2%;
+}
+
+.AiChatBox{
+	margin-left: 3%;
+	
+}
+
+.AiName{
+	font-weight: bold;
+	font-size: 1em;
+}
+
+.AiText{
+	font-size: 0.8em;
+	font-weight: 600;
+	padding: 0.5em;
+	border-radius: 10px;
+	background-color: #E6E1EF;
+}
+
+.UserChat{
+	width: 95%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	margin: 2%;
+}
+
+.UserText{
+	font-size: 0.8em;
+	font-weight: 600;
+	padding: 0.5em;
+	border-radius: 10px;
+	background-color: #E7D8E9;
+}
+
+.InputBox{
+	width: 95%;
+	height: 100%;
+	background-color: #E6E1EF;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-radius: 10px;
+	padding: 0 0 0 4%;
+}
+
+.InputBoxText{
+	color: #808080;
+	font-size: 1.1em;
+	width: 95%;
+	border: 0;
+	background-color: #E6E1EF;
+}
+
+.InputBtn{
+	width: 10%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-right: 1%;
+}
+
+.SettingButton{
+	
+}
+
+.SurveyBtn{
+	margin-right: -4%;
+	background-color: #3C1A7D;
+	border-color: #3C1A7D;
+	font-weight: bold;
+}
+
+.SurveyBtn:hover{
+	margin-right: -4%;
+	background-color: #3C1A7D;
+	border-color: #3C1A7D;
+	font-weight: bold;
+}

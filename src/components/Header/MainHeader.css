@@ -1,0 +1,13 @@
+@media screen and (max-width: 768px) {
+	header{
+		height: 8%;
+	}
+	.header{
+		height: 100%;
+		background-color: #E9E9E9;
+		display: flex;
+		align-items: center;
+	}
+}
+
+

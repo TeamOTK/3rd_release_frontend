@@ -1,0 +1,66 @@
+.CharacterSetList{
+	height: 100%;
+	width: 100%;
+	background-color: #ffffff;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 4%;
+}
+
+.SearchContainer{
+	width: 90%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.CommunitySearch{
+	border: none;
+	border-bottom: 1px solid black;
+	width: 80%;
+}
+
+.CharacterSetItem{
+	width: 90%;
+	height: 18%;
+	border: 1px solid black;
+	border-radius: 15px;
+	margin-top: 2%;
+	display: flex;
+	flex-direction: row;
+}
+
+.CommunityItemImg{
+	height: 100%;
+	width: 23%;
+	border-radius: 15px;
+	padding: 0.3%;
+	margin-right: 3%;
+}
+
+.CommunityItemInfo{
+	padding: 1%;
+	width: 77%;
+}
+
+.CommunityItemTopBox{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: 92%;
+	margin-bottom: 2%;
+}
+
+.CommunityItemBtn{
+	text-decoration: underline;
+	color: #3C1A7D;
+	cursor: pointer;
+}
+
+.ItemDesc{
+	width: 92%;
+	font-size: 80%;
+}

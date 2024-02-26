@@ -1,0 +1,49 @@
+.wrapper{
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.orderBox{
+	height: 8%;
+	background-color: #C1BDDA;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.2em;
+	font-weight: 600;
+}
+
+.situationList{
+	height: 84%;
+	margin-top: 3%;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.situationItem{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: auto;
+	width: 80%;
+}
+
+.situationImg{
+	height: 80%;
+	width: 100%;
+}
+
+.situationText{
+	font-size: 1em;
+	font-weight: 600;
+	border: 1px solid #808080;
+	height: 40%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+

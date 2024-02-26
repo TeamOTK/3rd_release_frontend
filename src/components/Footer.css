@@ -1,0 +1,19 @@
+footer{
+	position: fixed;
+	bottom: 0;
+	height: 6%;
+	width: 100%;
+}
+
+.bottomButton{
+	height: 100%;
+	width: 100%;
+	background-color: #3C1A7D;
+	border: 0px;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.2em;
+	font-weight: 600;
+}
