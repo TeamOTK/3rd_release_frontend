@@ -9,7 +9,7 @@ export default function ChatHeader(props){
 	const navigate = useNavigate();
 
 	const onClickBack = (userId) => {
-		navigate(-1,{state:{userId:userId}});
+		navigate('/character',{state:{userId:userId}});
 	}
 
 	const onClickCreate = (userId) => {
