@@ -82,13 +82,15 @@ export default function Chat(){
 		setIsChat(true)
 		setMsgLabel("답변 생성 중입니다...")
 		setChats(currentChats => [...currentChats, { key: Date.now(), name: user, content }]);
+		const currentchat = content;
 		setContent('');
 		const res = await axios.post(`http://13.209.167.220/chats/response`, {
 			"user_id": userId,
 			"character_id": characterId,
-			"user_chat": content
+			"user_chat": currentchat
 		});
 		// 답장
+		
 		setChats(currentChats => [...currentChats, { key: Date.now(), name: name, content: res.data.chat.response }]);
 		setCount(res.data.chat.chat_cnt)
 		setMsgLabel("메세지를 입력하세요")
