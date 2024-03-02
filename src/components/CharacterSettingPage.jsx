@@ -107,7 +107,7 @@ export default function CharacterSettingPage(){
 				"img": uploadImgName,
 				"user_cnt": 0
 			});
-			navigate('/chat', {state: {userId: userId, character_id: res.data.character.character_id, character_name: name, imgName:uploadImgName}})
+			navigate('/chat', {state: {userId: userId, characterId: res.data.character.character_id, character_name: name, imgName:uploadImgName}})
 		}
 		else {
 			const uploadImgName = Date.now() + ".png";
@@ -195,8 +195,12 @@ export default function CharacterSettingPage(){
 		setPersonality(e.target.value)
 	}
 
+	const onClickPersonalityItem = (item) => {
+		setPersonality(personality + item)
+	}
+
 	const onClickButton = () => {
-		navigate('/warning', {state: {userId: userId}});
+		// navigate('/warning', {state: {userId: userId}});
 	}
 	const handleClickButton = () => {
 		// navigate('/community', {state: {userId: userId}})
@@ -210,8 +214,7 @@ export default function CharacterSettingPage(){
 		}
 	}
 
-	return (
-
+	return(
 		<div className={styles.Background}>
 			<CommonHeader content={titleLabel}/>
 				<div className={styles.ScrollBackGround}>
