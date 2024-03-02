@@ -24,6 +24,7 @@ export default function CharacterSettingPage(){
 	const [imgSrc, setimgSrc] = useState('');
 	const [uploadFile, setUploadFile] = useState('');
 	const [uploadImgName, setUploadImgName] = useState("default.jpeg");
+	const [isOther, setIsOther] = useState(false)
 
 	const [titleLabel, setTitleLabel] = useState("캐릭터 생성")
 	const [nameLabel, setNameLabel] = useState("캐릭터의 이름입니다.")
@@ -40,6 +41,8 @@ export default function CharacterSettingPage(){
 	const [isSetting,setIsSetting] = useState(false);
 	const [isAccent,setIsAccent] = useState(false);
 
+	const userId = location.state.userId;
+
 	useEffect(() => {
 		if(location.state.characterId){
 			const params = {character_id:location.state.characterId}
@@ -47,19 +50,22 @@ export default function CharacterSettingPage(){
 				const res = await axios.get("http://13.209.167.220/characters/setting",{params});
 				// 답장
 				setName(res.data.character.name)
-				setTitleLabel("캐릭터 설정")
 				setDescription(res.data.character.description)
 				setSetting(res.data.character.setting)
 				setAccent(res.data.character.example_conv)
 				setCategory(res.data.character.category)
 				setOpen(true)
 				setUploadImgName(res.data.character.img)
-				setImgLabel("사진 선택됨")
+				
 				setIsName(true)
 				setIsCategory(true)
 				setIsDesc(true)
 				setIsSetting(true)
 				setIsAccent(true)
+				setIsOther(true)
+
+				setTitleLabel("캐릭터 설정")
+				setImgLabel("사진 선택됨")
 			}
 			getCharacter();
 		}
@@ -91,56 +97,61 @@ export default function CharacterSettingPage(){
 		}
 	};
 
-	const userId = location.state.userId;
-
 	async function sendSetting() {
-		if (uploadFile == '') {
-			const res = await axios.post("http://13.209.167.220/characters/create", {
-				"user_id": userId,
-				"name": name,
-				"description": description,
-				"category": category,
-				"setting": setting,
-				"example_conv": accent,
-				"personality": personality,
-				"open": open,
-				"img": uploadImgName,
-				"user_cnt": 0
-			});
-			navigate('/chat', {state: {userId: userId, characterId: res.data.character.character_id, character_name: name, imgName:uploadImgName}})
+		if(location.state.characterId){
+			const params = { character_id: location.state.characterId }
+			await axios.get("http://13.209.167.220/chats/cntupdate", {params});
+			navigate('/chat', {state: {userId: userId, characterId: location.state.characterId, character_name: name, imgName:uploadImgName}})
 		}
-		else {
-			const uploadImgName = Date.now() + ".png";
-			const upload = new AWS.S3.ManagedUpload({
-				params: {
-						Bucket: bucket, // 버킷 이름
-						Key: uploadImgName, // 유저 아이디
-						Body: uploadFile, // 파일 객체
-				},
-			});
-			const promise = upload.promise();
-			promise.then(
-					function () {
-							// 이미지 업로드 성공
+		else{
+			if (uploadFile == '') {
+				const res = await axios.post("http://13.209.167.220/characters/create", {
+					"user_id": userId,
+					"name": name,
+					"description": description,
+					"category": category,
+					"setting": setting,
+					"example_conv": accent,
+					"personality": personality,
+					"open": open,
+					"img": uploadImgName,
+					"user_cnt": 0
+				});
+				navigate('/chat', {state: {userId: userId, characterId: res.data.character.character_id, character_name: name, imgName:uploadImgName}})
+			}
+			else {
+				const uploadImgName = Date.now() + ".png";
+				const upload = new AWS.S3.ManagedUpload({
+					params: {
+							Bucket: bucket, // 버킷 이름
+							Key: uploadImgName, // 유저 아이디
+							Body: uploadFile, // 파일 객체
 					},
-					function (err) {
-						console.log(err)
-							// 이미지 업로드 실패
-					}
-			);
-			const res = await axios.post("http://13.209.167.220/characters/create", {
-				"user_id": userId,
-				"name": name,
-				"description":description,
-				"category": category,
-				"setting": setting,
-				"example_conv": accent,
-				"personality": personality,
-				"open": open,
-				"img": uploadImgName,
-				"user_cnt": 0
-			});
-			navigate('/chat', {state: {userId: userId, character_id: res.data.character.character_id, character_name: name, imgName:uploadImgName}})
+				});
+				const promise = upload.promise();
+				promise.then(
+						function () {
+								// 이미지 업로드 성공
+						},
+						function (err) {
+							console.log(err)
+								// 이미지 업로드 실패
+						}
+				);
+				const res = await axios.post("http://13.209.167.220/characters/create", {
+					"user_id": userId,
+					"name": name,
+					"description":description,
+					"category": category,
+					"setting": setting,
+					"example_conv": accent,
+					"personality": personality,
+					"open": open,
+					"img": uploadImgName,
+					"user_cnt": 0
+				});
+				navigate('/chat', {state: {userId: userId, character_id: res.data.character.character_id, character_name: name, imgName:uploadImgName}})
+			}
 		}
 	}
 
@@ -196,15 +207,11 @@ export default function CharacterSettingPage(){
 	}
 
 	const onClickPersonalityItem = (item) => {
-		setPersonality(personality + item)
+		if(!isOther){
+			setPersonality(personality + item)
+		}
 	}
 
-	const onClickButton = () => {
-		// navigate('/warning', {state: {userId: userId}});
-	}
-	const handleClickButton = () => {
-		// navigate('/community', {state: {userId: userId}})
-	}
 	const handleClickNextButton = () => {
 		if(isName && isCategory && isDesc && isSetting && isAccent){
 			sendSetting();
@@ -226,14 +233,14 @@ export default function CharacterSettingPage(){
 									<Form.Label className={styles.Tag}>이름<span className={styles.RequiredStar}>*</span></Form.Label>
 									<Form.Label className={styles.LabelOkay}>{nameLabel}</Form.Label>
 								</div>
-								<Form.Control className={styles.inputBox} type='text' name='name' value={name} onChange={onChangeNameInput}></Form.Control>
+								<Form.Control className={styles.inputBox} type='text' name='name' value={name} onChange={onChangeNameInput} disabled={isOther}></Form.Control>
 							</div>
 							<div className={styles.NameCategory}>
 								<div className='d-flex flex-row align-items-center'>
 									<Form.Label className={styles.Tag}>분류<span className={styles.RequiredStar}>*</span></Form.Label>
 									<Form.Label className={styles.LabelOkay}>{categoryLabel}</Form.Label>
 								</div>
-								<Form.Select className={styles.inputBox} value={category} onChange={onChangeCategory}>
+								<Form.Select disabled={isOther} className={styles.inputBox} value={category} onChange={onChangeCategory}>
 									<option value={0}>카테고리 설정</option>
 									<option value={1}>웹툰/웹소</option>
 									<option value={2}>만화/애니</option>
@@ -248,7 +255,7 @@ export default function CharacterSettingPage(){
 								<Form.Label className={styles.Tagtwo}>소개<span className={styles.RequiredStar}>*</span></Form.Label>
 								<Form.Label className={styles.LabelOkay}>{descLabel}</Form.Label>
 							</div>
-							<Form.Control className={styles.inputBox} rows={1} as='textarea' name='setting' value={description}  onChange={onChangeDescription}></Form.Control>
+							<Form.Control className={styles.inputBox} rows={1} as='textarea' name='setting' value={description}  onChange={onChangeDescription} disabled={isOther}></Form.Control>
 						</Form>
 						<Form className={styles.SettingBox}>
 							<div className='d-flex flex-row align-items-center'>
@@ -258,7 +265,7 @@ export default function CharacterSettingPage(){
 									<Form.Label className={styles.LabelOkay}>길수록 반영이 잘 됩니다. (예: 고등학생임 / 똑똑함 / 친구랑 사이가 좋음)</Form.Label>
 								</div>
 							</div>
-							<Form.Control className={styles.inputBox} rows={4} as='textarea' name='setting' value={setting}  onChange={onChangeSettingInput}></Form.Control>
+							<Form.Control className={styles.inputBox} rows={4} as='textarea' name='setting' value={setting}  onChange={onChangeSettingInput} disabled={isOther}></Form.Control>
 						</Form>
 						<Form className={styles.SettingBox}>
 							<div className='d-flex flex-row align-items-center'>
@@ -268,7 +275,7 @@ export default function CharacterSettingPage(){
 									<Form.Label className={styles.LabelOkay}>(예: 하하, 안녕. / 야호 넌 누구니?)(추임새만 넣으면 말을 반복합니다.)</Form.Label>
 								</div>
 							</div>
-							<Form.Control className={styles.inputBox} rows={4} as='textarea' name='accent' value={accent}onChange={onChangeAccentInput}></Form.Control>
+							<Form.Control className={styles.inputBox} rows={4} as='textarea' name='accent' value={accent} onChange={onChangeAccentInput} disabled={isOther}></Form.Control>
 						</Form>
 						<Form className={styles.SettingBox}>
 							<div className='d-flex flex-row align-items-center'>
@@ -284,14 +291,14 @@ export default function CharacterSettingPage(){
 								<div className={styles.PersonalityItem} onClick={() => onClickPersonalityItem('외향적 / ')}><CiCircleCheck style={{marginRight:"3%"}} size={20}/>외향적</div>
 								<div className={styles.PersonalityItem} onClick={() => onClickPersonalityItem('내향적 / ')}><CiCircleCheck style={{marginRight:"3%"}} size={20}/>내향적</div>
 							</div>
-							<Form.Control className={styles.inputBox} rows={1} as='textarea' name='personality' value={personality}  onChange={onChangePersonalityInput}></Form.Control>
+							<Form.Control className={styles.inputBox} rows={1} as='textarea' name='personality' value={personality}  onChange={onChangePersonalityInput} disabled={isOther}></Form.Control>
 						</Form>
 						<div className={styles.OpenBox}>
 							<Form.Label className={styles.Tag}>캐릭터 공개 여부</Form.Label>
 							<Form className={styles.radioContainer}>
 								<Form.Group className={styles.radioBox} id='radioBox'>
-									<Form.Check type='radio' name='open' label='공개' style={{width:'40%'}} onChange={() => setOpen(true)}  defaultChecked/>
-									<Form.Check type='radio'  name='open' label= '비공개' style={{width:'40%'}} onChange={() => setOpen(false)} />
+									<Form.Check type='radio' name='open' label='공개' style={{width:'40%'}} onChange={() => setOpen(true)}  defaultChecked disabled={isOther}/>
+									<Form.Check type='radio'  name='open' label= '비공개' style={{width:'40%'}} onChange={() => setOpen(false)} disabled={isOther}/>
 								</Form.Group>
 							</Form>
 						</div>
@@ -299,7 +306,7 @@ export default function CharacterSettingPage(){
 							<div className={styles.imgBox}>
 								<label htmlFor='imgUpload' className={styles.inputFileButton}>{imgLabel}</label>
 								<input type='file' id='imgUpload' accept="image/*" style={{display:'none'}}  onChange={(e) => {;
-								handleFileInput(e.target.files[0])}} />
+								handleFileInput(e.target.files[0])}} disabled={isOther}/>
 								{imgSrc && <img src={imgSrc} className={styles.imgPreview} />}
 							</div>
 						</div>
