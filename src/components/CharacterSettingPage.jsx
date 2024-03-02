@@ -107,7 +107,7 @@ export default function CharacterSettingPage(){
 				"img": uploadImgName,
 				"user_cnt": 0
 			});
-			navigate('/chat', {state: {userId: userId, character_id: res.data.character.character_id, character_name: name, imgName:uploadImgName}})
+			navigate('/chat', {state: {userId: userId, characterId: res.data.character.character_id, character_name: name, imgName:uploadImgName}})
 		}
 		else {
 			const uploadImgName = Date.now() + ".png";
