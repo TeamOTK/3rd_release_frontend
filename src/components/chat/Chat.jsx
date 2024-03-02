@@ -22,8 +22,8 @@ export default function Chat(){
 	const characterId = location.state.characterId;
 	const name = location.state.name;
 	const imgName = location.state.imgName;
-
-	const [user, setUser] = useState("user")
+	const user =  "user"
+	
 	const [chats, setChats] = useState([]);
 	const [content,setContent] = useState('');
 	const [msgLabel, setMsgLabel] = useState("메세지를 입력하세요")
@@ -53,6 +53,19 @@ export default function Chat(){
 		}
 		registerId();
 	},[])
+
+	useEffect(()=>{
+		const getHistory = async () => {
+			const params = {user_id:userId, character_id:location.state.characterId}
+			const res = await axios.get("http://13.209.167.220/chats/history", {params})
+			// 답장
+			res.data.chats.map((chat) => {
+				setChats(currentChats => [...currentChats, { key: Date.now(), name: user, content:chat.user_chat }]);
+				setChats(currentChats => [...currentChats, { key: Date.now(), name: name, content:chat.ai_chat}]);
+			})
+		}
+		userId && getHistory();
+	},[userId])
 
 	useEffect(() => {
 		if(count > 50){

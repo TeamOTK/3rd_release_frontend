@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 import styles from './CharacterCommunity.module.css'
 import { BiCommentDetail } from "react-icons/bi";
@@ -12,7 +13,9 @@ export default function CharacterTab(props){
 		navigate('/character/setting', {state:{userId:props.realId, characterId:character.character_id}});
 	}
 	
-	const onClickChat = (character) => {
+	async function onClickChat (character){
+		const params = { character_id: character.character_id }
+		await axios.get("http://13.209.167.220/chats/cntupdate", {params});
 		navigate('/chat', {state:{userId:props.realId, characterId:character.character_id, name:character.name, imgName:character.img}});
 	}
 
