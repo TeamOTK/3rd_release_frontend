@@ -16,7 +16,7 @@ export default function CharacterTab(props){
 	async function onClickChat (character){
 		const params = { character_id: character.character_id }
 		await axios.get("http://13.209.167.220/chats/cntupdate", {params});
-		navigate('/chat', {state:{userId:props.realId, characterId:character.character_id, name:character.name, imgName:character.img}});
+		navigate('/warning', {state:{userId:props.realId, characterId:character.character_id, name:character.name, imgName:character.img}});
 	}
 
 

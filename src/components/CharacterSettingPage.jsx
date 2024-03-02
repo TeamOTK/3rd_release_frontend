@@ -101,7 +101,7 @@ export default function CharacterSettingPage(){
 		if(location.state.characterId){
 			const params = { character_id: location.state.characterId }
 			await axios.get("http://13.209.167.220/chats/cntupdate", {params});
-			navigate('/chat', {state: {userId: userId, characterId: location.state.characterId, character_name: name, imgName:uploadImgName}})
+			navigate('/warning', {state: {userId: userId, characterId: location.state.characterId, name: name, imgName:uploadImgName}})
 		}
 		else{
 			if (uploadFile == '') {
@@ -117,7 +117,7 @@ export default function CharacterSettingPage(){
 					"img": uploadImgName,
 					"user_cnt": 0
 				});
-				navigate('/chat', {state: {userId: userId, characterId: res.data.character.character_id, character_name: name, imgName:uploadImgName}})
+				navigate('/warning', {state: {userId: userId, characterId: res.data.character.character_id, name: name, imgName:uploadImgName}})
 			}
 			else {
 				const uploadImgName = Date.now() + ".png";

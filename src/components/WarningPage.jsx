@@ -7,13 +7,10 @@ import CommonHeader from './Header';
 
 export default function WarningPage(){
 	const navigate = useNavigate();
-
-	const onClickButton = () => {
-		navigate('/main');
-	}
+	const location = useLocation();
 
 	const handleClick = () => {
-		// navigate('/setting/character', {state:{userId:userId}});
+		navigate('/chat', {state:{userId:location.state.userId, characterId: location.state.characterId, name: location.state.name, imgName: location.state.imgName}});
 	}
 
 	return(
