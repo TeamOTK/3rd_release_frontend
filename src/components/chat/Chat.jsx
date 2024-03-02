@@ -5,11 +5,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Button from 'react-bootstrap/esm/Button';
 import { BsCursorFill } from "react-icons/bs";
-import './Chat.css';
+import styles from './Chat.module.css';
 import { BsChevronLeft } from "react-icons/bs";
 import { BsSearch } from "react-icons/bs";
-import SubHeader from '../Header/SubHeader';
-import ChatHeader from '../Header/ChatHeader';
+
+import CommonHeader from '../Header';
 import Rightchat from './RightChat';
 import Leftchat from './LeftChat';
 
@@ -17,22 +17,18 @@ export default function Chat(){
 	const navigate = useNavigate();
 	const location = useLocation();
 	
-	const [chatId, setChatId] = useState(0)
 	const [isChat, setIsChat] = useState(false)
 
-	const userId = location.state.userId;
-
 	const characterId = location.state.characterId;
-	const situationId = location.state.situationId;
-	const name = location.state.character_name;
+	const name = location.state.name;
 	const imgName = location.state.imgName;
-	const firstConv = location.state.firstConv;
 
 	const [user, setUser] = useState("user")
-	const [chats, setChats] = useState([{ name: name, content: firstConv }]);
+	const [chats, setChats] = useState([]);
 	const [content,setContent] = useState('');
 	const [msgLabel, setMsgLabel] = useState("메세지를 입력하세요")
 	const [count, setCount] = useState(0)
+	const [userId, setUserId] = useState("");
 
 	const getUserId = () => {
 		// 로컬 스토리지에서 사용자 ID를 시도하여 가져옴
@@ -53,7 +49,7 @@ export default function Chat(){
 			});
 			// 답장
 			setCount(res.data.user.chat_cnt)
-			// setCount(50)
+			setUserId(res.data.user.user_id)
 		}
 		registerId();
 	},[])
@@ -70,11 +66,9 @@ export default function Chat(){
 		setMsgLabel("답변 생성 중입니다...")
 		setChats(currentChats => [...currentChats, { key: Date.now(), name: user, content }]);
 		setContent('');
-
 		const res = await axios.post(`http://13.209.167.220/chats/response`, {
 			"user_id": userId,
 			"character_id": characterId,
-			"situation_id": situationId,
 			"user_chat": content
 		});
 		// 답장
@@ -92,7 +86,7 @@ export default function Chat(){
 	};
 
 	const onClickButton = () => {
-		navigate('/setting/situation', {state: {userId: userId, character_id: characterId, situationId: situationId, character_name: name, imgName:imgName}});
+		// navigate('/setting/situation', {state: {userId: userId, character_id: characterId, situationId: situationId, character_name: name, imgName:imgName}});
 	}
 	const scrollRef = useRef()
 
@@ -106,16 +100,11 @@ export default function Chat(){
 			}
 	};
 	return(
-		<>
-			<div className='ChattingHeader'>
-				<BsChevronLeft size={25} onClick={onClickButton}/>
-				<h2 className="text">{name}</h2>
-				{/* <BsSearch size={30} style={{marginRight:'3%',fontWeight:'bold'}} onClick={handleClickSearch}/> */}
-				{count < 10 ? <div></div> : <Button className='SurveyBtn' onClick={()=>window.open("https://forms.gle/cSZAF8EfoSvoTqiL7")}>!설문!</Button>}
-			</div>
-			<ChatHeader count={count}/>
-			<div className='ChatContainer'>
-				<div className="ChatLog" ref={scrollRef}>
+		<div className={styles.Background}>
+			<CommonHeader content={name} userId={userId}/>
+			{/* {count < 10 ? <div></div> : <Button className={styles.SurveyBtn} onClick={()=>window.open("https://forms.gle/cSZAF8EfoSvoTqiL7")}>!설문!</Button>} */}
+			<div className={styles.ChatContainer}>
+				<div className={styles.ChatLog} ref={scrollRef}>
 					{chats && chats.map((chat, index) => (
 						chat.name === user ?
 						<Rightchat key={index} name={chat.name} content={chat.content}/> :
@@ -125,14 +114,13 @@ export default function Chat(){
 			</div>
 			
 			<div className='d-flex justify-content-center' style={{height:'6%', marginTop:'4%'}}>
-				<div className="InputBox">
-					<input type='text'className='InputBoxText' placeholder={msgLabel} value={content} disabled={isChat? true : false} onChange={e => setContent(e.target.value)} onKeyDown={handleOnKeyPress}></input>
-					<div onClick={sendChat} className='InputBtn'>
+				<div className={styles.InputBox}>
+					<input type='text'className={styles.InputBoxText} placeholder={msgLabel} value={content} disabled={isChat? true : false} onChange={e => setContent(e.target.value)} onKeyDown={handleOnKeyPress}></input>
+					<div onClick={sendChat} className={styles.InputBtn}>
 						<BsCursorFill size={24} style={{color:'black'}} />
 					</div>
 				</div>
 			</div>
-			
-		</>
+		</div>
 	)
 }

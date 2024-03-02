@@ -1,9 +1,9 @@
-import './Chat.css'
+import styles from './Chat.module.css'
 
 export default function Rightchat({name, content}) {
 	return (
-		<div className="UserChat">
-			<div className='UserText'>{content}</div>
+		<div className={styles.UserChat}>
+			<div className={styles.UserText}>{content}</div>
 		</div>
 	)
 }

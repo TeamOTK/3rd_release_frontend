@@ -1,0 +1,14 @@
+.HeaderContainer{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	height: 8%;
+	padding-left: 3%;
+	padding-right: 3%;
+	background-color: #9195F6;
+}
+
+.text{
+	margin-bottom: 0;
+}

@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
-import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
 import HomePage from './components/HomePage';
-import MainPage from './components/MainPage';
-import WarningPage from './components/WarningPage';
-import CharacterPage from './components/CharacterPage/CharacterPage';
-import Chat from './components/chat/Chat';
-import Search from './components/Search';
-import Situation from './components/Situation';
-import CharacterSettingPage from './components/CharacterSettingPage';
-import SituationSettingPage from './components/SituationSettingPage';
 import CharacterCommunity from './components/CharacterCommunity';
+import WarningPage from './components/WarningPage';
+import Chat from './components/chat/Chat';
+import CharacterSettingPage from './components/CharacterSettingPage';
 
 const App = () => {
 
@@ -23,15 +17,10 @@ const App = () => {
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<HomePage />}></Route>
-					<Route path="/main" element={<MainPage />}></Route>
-					<Route path="/warning" element={<WarningPage />}></Route>
-					<Route path='/character' element={<CharacterPage/>}></Route>
-					<Route path='/community' element={<CharacterCommunity/>}></Route>
-					<Route path='/setting/character' element={<CharacterSettingPage/>}></Route>
-					<Route path='/setting/situation' element={<SituationSettingPage/>}></Route>
-					<Route path='/page/chat/:id' element={<Chat/>}></Route>
-					<Route path='/page/search' element={<Search/>}></Route>
-					<Route path='/page/situation' element={<Situation/>}></Route>
+					<Route path='/character' element={<CharacterCommunity/>}></Route>
+					<Route path='/character/setting' element={<CharacterSettingPage/>}></Route>
+					<Route path='/warning' element={<WarningPage/>}></Route>
+					<Route path='/chat' element={<Chat/>}></Route>
 					<Route path="/*" element={<HomePage />}></Route>
 				</Routes>
 			</BrowserRouter>

@@ -1,4 +1,4 @@
-import './Chat.css'
+import styles from './Chat.module.css'
 
 import { useState } from 'react'
 
@@ -8,11 +8,11 @@ export default function Leftchat({name, content,imgName}) {
 	// 	setImgName("YeongJoong")
 	// }
 	return (
-		<div className="AiChat">
+		<div className={styles.AiChat}>
 			{imgName && <img src={`https://chacha-spark.s3.ap-northeast-2.amazonaws.com/character/${imgName}`} width={60}/>}
-			<div className='AiChatBox'>
-				<div className='AiName'>{name}</div>
-				<div className='AiText'>{content}</div>
+			<div className={styles.AiChatBox}>
+				<div className={styles.AiName}>{name}</div>
+				<div className={styles.AiText}>{content}</div>
 			</div>
 		</div>
 	)

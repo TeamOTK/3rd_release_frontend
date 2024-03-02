@@ -1,83 +1,123 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState  } from 'react';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
+import CommonHeader from './Header';
 import Button from 'react-bootstrap/esm/Button';
-import './CharacterCommunity.css'
-import { BsChevronLeft } from "react-icons/bs";
-import { BsSearch } from "react-icons/bs";
-
+import styles from './CharacterCommunity.module.css';
+import CharacterTab from './CharacterTab';
 
 export default function CharacterCommunity(){
 	const navigate = useNavigate();
-	const location = useLocation();
 
-	const [characterList, setCharacterList] = useState('');
+	const [currentTab, setCurrentTab] = useState(0);
 	const [searchInput, setSearchInput] = useState('');
+	const [characterList, setCharacterList] = useState('');
 	const [filteredData,setFilteredData] = useState()
+	const [params, setParams] = useState({category:currentTab+1})
+	const [realId, setRealId] = useState('');
 
-	const userId = location.state.userId;
+	const getUserId = () => {
+		// 로컬 스토리지에서 사용자 ID를 시도하여 가져옴
+		let userId = localStorage.getItem('userId');
+		// 사용자 ID가 없으면 새로 생성하여 저장
+		if (!userId) {
+			userId = uuidv4();
+			localStorage.setItem('userId', userId);
+		}
+		return userId;
+	};
+
+	const registerId = async () => {
+		const res = await axios.post("http://13.209.167.220/users/register", {
+				"uuid": userId
+		});
+		// 답장
+		setRealId(res.data.user.user_id)
+	}
+
+	const userId = getUserId();
+	registerId();
+
 	const getCharacters = async () => {
-		const res = await axios.get("http://13.209.167.220/characters/list");
+		const res = await axios.get("http://13.209.167.220/characters/list",{params});
 		// 답장
 		setCharacterList(res.data.character);
 		setFilteredData(res.data.character)
 	}
 
+	
+	useEffect(() =>{
+		getCharacters();
+	},[params])
+
+	const tabClickHandler=(index)=>{
+		setParams({category:index+1})
+		setCurrentTab(index);
+	};
 	const searchItems = (searchValue) => {
 		setSearchInput(searchValue)
 		setFilteredData(characterList.filter((item) => {
 			return Object.values(item).join('').toLowerCase().includes(searchValue.toLowerCase())
 		}))
 	}
-	useEffect(() =>{
-		getCharacters();
-	},[])
 
-	const onClickButton = () => {
-		navigate('/setting/character', {state: {userId: userId}});
-	}
-
-	const onClickItem = (character) => {
-		navigate('/setting/character', {state: {userId: userId, isCommunity:true, name:character.name, setting: character.setting, img:character.img, personality: character.personality, accent: character.accent, characterId: character.character_id}})
-	}
+	const tabContArr = [
+		{
+			tabTitle:(
+				<li className={currentTab==0 ? styles.isActiveTab : styles.notActiveTab} onClick={() => tabClickHandler(0)} key={0}>웹툰/웹소</li>
+			),
+			tabCont:(
+				<CharacterTab filteredData={filteredData} realId={realId} searchItems={searchItems} key={0}/>
+			)
+		},
+		{
+			tabTitle:(
+				<li className={currentTab==1 ? styles.isActiveTab : styles.notActiveTab} onClick={() => tabClickHandler(1)} key={1}>만화/애니</li>
+			),
+			tabCont:(
+				<CharacterTab filteredData={filteredData} realId={realId} searchItems={searchItems} key={1}/>
+			)
+		},
+		{
+			tabTitle:(
+				<li className={currentTab==2 ? styles.isActiveTab : styles.notActiveTab} onClick={() => tabClickHandler(2)} key={2}>게임</li>
+			),
+			tabCont:(
+				<CharacterTab filteredData={filteredData} realId={realId} searchItems={searchItems} key={2}/>
+			)
+		},
+		{
+			tabTitle:(
+				<li className={currentTab==3 ? styles.isActiveTab : styles.notActiveTab} onClick={() => tabClickHandler(3)} key={3}>실존인물</li>
+			),
+			tabCont:(
+				<CharacterTab filteredData={filteredData} realId={realId} searchItems={searchItems} key={3}/>
+			)
+		},
+		{
+			tabTitle:(
+				<li className={currentTab==4 ? styles.isActiveTab : styles.notActiveTab} onClick={() => tabClickHandler(4)} key={4}>기타</li>
+			),
+			tabCont:(
+				<CharacterTab filteredData={filteredData} realId={realId} searchItems={searchItems} key={4}/>
+			)
+		}
+	]
 
 	return(
-		<>
-			<div className='WarningHeader'>
-				<BsChevronLeft size={25} onClick={onClickButton}/>
-				<h2 className="text"></h2>
-				{/* <BsSearch size={30} style={{marginRight:'3%',fontWeight:'bold'}} onClick={handleClickSearch}/> */}
-				<div></div>
-			</div>
-		<div className='SettingPageBackGround'>
-			<div className='WarningLargeTextSet'>
-				<h2 className='WarningPageLargeText'>다른 사용자의 캐릭터</h2>
-			</div>
-			<div className='SubWarning'>캐릭터는 사용자의 창작물입니다.</div>
-			<div className='SearchContainer'>
-				<BsSearch size={24}></BsSearch> 
-				<input className='CommunitySearch' onChange={(e) => searchItems(e.target.value)}></input>
-			</div>
-			<div className='CharacterSetList'>
-				{filteredData && filteredData.map((character) => {
-					return(
-						<div className='CharacterSetItem' key={character.character_id}>
-						<img src={`https://chacha-spark.s3.ap-northeast-2.amazonaws.com/character/${character.img}`} className='CommunityItemImg'/>
-						<div className='CommunityItemInfo'>
-							<div className='CommunityItemTopBox'>
-								<div style={{fontWeight:"bold", fontSize:"140%", marginRight:'-24%'}}>{character.name}</div>
-								<div style={{fontSize:'85%'}}>누적 사용자 {character.user_cnt}</div>
-								<div className='CommunityItemBtn' onClick={() => onClickItem(character)}>사용하기</div>
-							</div>
-							<div className='ItemDesc'>{character.setting}</div>
-						</div>
-					</div>
-					)
-				})}
+		<div className={styles.Background}>
+			<CommonHeader content="캐릭터 목록" isCharacter={true} userId={realId}/>
+			<div className={styles.CharacterSetList}>
+				<ul className={styles.tabs}>
+					{tabContArr.map((section,index)=>{
+						return section.tabTitle
+					})}
+				</ul>
+				{tabContArr[currentTab].tabCont}
+				
 			</div>
 		</div>
-		</>
-		
 	)
 }
