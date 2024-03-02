@@ -9,7 +9,7 @@ import styles from './Chat.module.css';
 import { BsChevronLeft } from "react-icons/bs";
 import { BsSearch } from "react-icons/bs";
 
-import CommonHeader from '../Header';
+import ChatHeader from '../Header_Chat';
 import Rightchat from './RightChat';
 import Leftchat from './LeftChat';
 
@@ -50,6 +50,10 @@ export default function Chat(){
 			// 답장
 			setCount(res.data.user.chat_cnt)
 			setUserId(res.data.user.user_id)
+			if(res.data.user.cha_cnt > 50){
+				setIsChat(true)
+				setMsgLabel("최대 채팅 수에 도달하였습니다.")
+			}
 		}
 		registerId();
 	},[])
@@ -98,9 +102,6 @@ export default function Chat(){
 		}
 	};
 
-	const onClickButton = () => {
-		// navigate('/setting/situation', {state: {userId: userId, character_id: characterId, situationId: situationId, character_name: name, imgName:imgName}});
-	}
 	const scrollRef = useRef()
 
 	useEffect(() => {
@@ -114,7 +115,7 @@ export default function Chat(){
 	};
 	return(
 		<div className={styles.Background}>
-			<CommonHeader content={name} userId={userId}/>
+			<ChatHeader content={name} userId={userId} count={count}/>
 			{/* {count < 10 ? <div></div> : <Button className={styles.SurveyBtn} onClick={()=>window.open("https://forms.gle/cSZAF8EfoSvoTqiL7")}>!설문!</Button>} */}
 			<div className={styles.ChatContainer}>
 				<div className={styles.ChatLog} ref={scrollRef}>
