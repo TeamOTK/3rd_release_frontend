@@ -1,0 +1,155 @@
+.Background{
+	height: 100%;
+	background-color: #B7C9F2;
+}
+
+.CharacterSetList{
+	height: 90%;
+	width: 100%;
+	margin-top: 2%;
+}
+
+.ul{
+	margin-block-start: 0 !important;
+	margin-block-end: 0;
+	padding-inline-end: 0;
+}
+
+.tabs{
+	margin: 0px;
+  padding: 0px;
+  list-style: none;
+	display: flex;
+	height: 5%;
+}
+
+ul.tabs li{
+  background: white;
+	width: 20%;
+  color: #222;
+	border-top-left-radius: 25px;
+	border-top-right-radius: 25px;
+  display: flex;
+  cursor: pointer;
+	justify-content: center;
+	align-items: center;
+}
+
+ul.tabs li.isActiveTab{
+  background: #F9F07A;
+  color: #222;
+	border-top-left-radius: 25px;
+	border-top-right-radius: 25px;
+}
+
+.tabCont{
+	height: 100%;
+	margin: 0;
+	background-color: #F9F07A;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 4%;
+	overflow-y: scroll;
+}
+
+
+.CharacterSetItem{
+	width: 90%;
+	height: 0;
+	padding-bottom: 25%;
+	position: relative;
+	border: 1px solid black;
+	border-radius: 15px;
+	background-color: white;
+	margin-bottom: 4%;
+}
+
+.CommunityItemImg{
+	position: absolute;
+	width: 16%;
+	height: 85%;
+	margin-top: 1.5%;
+	margin-left: 2%;
+}
+
+.CommunityItemInfo{
+	padding: 1%;
+	width: 77%;
+	margin-left: 20%;
+	display: flex;
+	flex-direction: column;
+}
+
+.InfoBox{
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.CommunityItemTopBox{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: 92%;
+	margin-bottom: 2%;
+}
+
+.ItemDesc{
+	width: 100%;
+	font-size: 80%;
+	height: 2.5vh;
+	overflow-y: hidden;
+}
+
+.userCountBox{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 15%;
+}
+
+.ButtonBox{
+	width: 65%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-top: 2%;
+}
+
+.CommunityItemBtn{
+	border: 1px solid #FB88B4;
+	border-radius: 10px;
+	background-color: #FB88B4;
+	width: 45%;
+	display: flex;
+	justify-content: center;
+	color: #000000;
+	cursor: pointer;
+}
+
+.SearchContainer{
+	width: 90%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 2%;
+}
+
+.CommunitySearch{
+	border: none;
+	border: 0;
+	border-bottom: 1px solid black;
+	width: 80%;
+	background-color: #F9F07A;
+}
+
+.nameBox{
+	font-size: 140%;
+	font-weight: bold;
+	height: 4vh;
+	overflow-y: hidden;
+}
