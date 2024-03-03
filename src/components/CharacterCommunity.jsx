@@ -90,7 +90,7 @@ export default function CharacterCommunity(){
 		},
 		{
 			tabTitle:(
-				<li className={currentTab==3 ? styles.isActiveTab : styles.notActiveTab} onClick={() => tabClickHandler(3)} key={3}>실존인물</li>
+				<li className={currentTab==3 ? styles.isActiveTab : styles.notActiveTab} style={{fontSize:"90%"}}onClick={() => tabClickHandler(3)} key={3}>영화/드라마</li>
 			),
 			tabCont:(
 				<CharacterTab filteredData={filteredData} realId={realId} searchItems={searchItems} key={3}/>
