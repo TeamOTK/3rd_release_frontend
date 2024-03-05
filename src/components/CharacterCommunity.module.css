@@ -130,6 +130,17 @@ ul.tabs li.isActiveTab{
 	cursor: pointer;
 }
 
+.CommunityItemBtn2{
+	border: 1px solid #808080;
+	border-radius: 10px;
+	/* background-color: #808080; */
+	width: 45%;
+	display: flex;
+	justify-content: center;
+	color: #808080;
+	cursor: pointer;
+}
+
 .SearchContainer{
 	width: 90%;
 	display: flex;

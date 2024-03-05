@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/esm/Button';
 import styles from './CharacterCommunity.module.css';
 import CharacterTab from './CharacterTab';
 
+
 export default function CharacterCommunity(){
 	const navigate = useNavigate();
 

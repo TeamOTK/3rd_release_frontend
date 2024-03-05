@@ -42,8 +42,8 @@ export default function CharacterTab(props){
 								</div>
 							</div>
 							<div className={styles.ButtonBox}>
-								<div className={styles.CommunityItemBtn} onClick={() => onClickViewSetting(character)}>설정 보기</div>
 								<div className={styles.CommunityItemBtn} onClick={() => onClickChat(character)}>대화하기</div>
+								<div className={styles.CommunityItemBtn2} onClick={() => onClickViewSetting(character)}>설정 보기</div>
 							</div>
 						</div>
 					</div>
