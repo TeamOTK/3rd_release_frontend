@@ -4,6 +4,7 @@ import axios from 'axios';
 import styles from './CharacterCommunity.module.css'
 import { BiCommentDetail } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
+import { MdOutlinePersonOutline } from "react-icons/md";
 import { useState } from 'react';
 
 export default function CharacterTab(props){
@@ -37,7 +38,7 @@ export default function CharacterTab(props){
 									<div className={styles.ItemDesc}>{character.description}</div>
 								</div>
 								<div className={styles.userCountBox}>
-									<BiCommentDetail size={24} style={{paddingTop:"4%"}}/>
+									<MdOutlinePersonOutline size={24}/>
 									<div style={{fontSize:'100%', marginLeft:"2%"}}>{character.user_cnt}</div>
 								</div>
 							</div>
