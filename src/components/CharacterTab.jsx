@@ -38,8 +38,14 @@ export default function CharacterTab(props){
 									<div className={styles.ItemDesc}>{character.description}</div>
 								</div>
 								<div className={styles.userCountBox}>
-									<MdOutlinePersonOutline size={24}/>
-									<div style={{fontSize:'100%', marginLeft:"2%"}}>{character.user_cnt}</div>
+									<div className={styles.CountSmall}>
+										<MdOutlinePersonOutline size={20}/>
+										<div style={{fontSize:'85%', marginLeft:"2%"}}>{character.user_cnt}</div>
+									</div>
+									<div className={styles.CountSmall}>
+										<BiCommentDetail style={{marginTop:"1%"}} size={20}/>
+										<div style={{fontSize:'85%', marginLeft:"2%"}}>{character.chat_cnt}</div>
+									</div>
 								</div>
 							</div>
 							<div className={styles.ButtonBox}>

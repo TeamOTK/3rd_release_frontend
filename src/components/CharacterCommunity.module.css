@@ -105,10 +105,17 @@ ul.tabs li.isActiveTab{
 
 .userCountBox{
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: center;
-	justify-content: space-between;
 	width: 19%;
+}
+
+.CountSmall{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	margin-bottom: 3%;
 }
 
 .ButtonBox{
