@@ -11,4 +11,13 @@
 
 .text{
 	margin-bottom: 0;
+	text-align: center;
+	display: flex;
+	align-items: center;
+}
+
+.ChatCenter{
+	width: 40%;
+	display: flex;
+	flex-direction: row;
 }
