@@ -17,7 +17,7 @@ export default function CommonHeader(props){
 	const onClickCreate = (userId) => {
 		ReactGA.event({
 			category: "Button",
-			action: "Create new character"
+			action: "Visit Create Page"
 		})
 		navigate('/character/setting', {state:{userId:userId}})
 	}
