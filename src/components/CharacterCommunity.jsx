@@ -7,6 +7,8 @@ import CommonHeader from './Header';
 import Button from 'react-bootstrap/esm/Button';
 import styles from './CharacterCommunity.module.css';
 import CharacterTab from './CharacterTab';
+import EventModal from './EventModal';
+import { Modal } from 'react-bootstrap';
 
 
 export default function CharacterCommunity(){
@@ -18,6 +20,7 @@ export default function CharacterCommunity(){
 	const [filteredData,setFilteredData] = useState()
 	const [params, setParams] = useState({category:currentTab+1})
 	const [realId, setRealId] = useState('');
+	const [show, setShow] = useState(true)
 
 	const getUserId = () => {
 		// 로컬 스토리지에서 사용자 ID를 시도하여 가져옴
@@ -109,6 +112,7 @@ export default function CharacterCommunity(){
 
 	return(
 		<div className={styles.Background}>
+			<EventModal show={show} setShow={setShow}/>
 			<CommonHeader content="캐릭터 목록" isCharacter={true} userId={realId}/>
 			<div className={styles.CharacterSetList}>
 				<ul className={styles.tabs}>

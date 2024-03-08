@@ -21,3 +21,15 @@
 	display: flex;
 	flex-direction: row;
 }
+
+.SurveyBtn{
+	background-color: #FB88B4;
+	border: #FB88B4;
+	color: black;
+}
+
+.SurveyBtn:hover{
+	background-color: #FB88B4;
+	border: #FB88B4;
+	color: black;
+}
