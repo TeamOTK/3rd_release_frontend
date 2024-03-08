@@ -21,7 +21,7 @@ export default function ChatHeader(props){
 		<div className="HeaderContainer">
 			{props.isCharacter? <div/> : <BsChevronLeft size={28} onClick={() => onClickBack(props.userId)}/>}
 			<div className="ChatCenter">
-				<Button onClick={()=>window.open("https://t.co/OXqqe4K3eX")}>설문</Button>
+				<Button onClick={()=>window.open("https://t.co/OXqqe4K3eX")} style={{backgroundColor:"#FB88B4", border:"#FB88B4"}}>설문</Button>
 				<h2 className="text" style={{marginLeft:'5%'}}>{props.content}</h2>
 			</div>
 			
