@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { BsChevronLeft } from "react-icons/bs";
 import { CiSquarePlus } from "react-icons/ci";
 import { IoPersonAddOutline } from "react-icons/io5";
-
+import ReactGA from "react-ga4";
 
 import './Header.css'
 
@@ -15,6 +15,10 @@ export default function CommonHeader(props){
 	}
 
 	const onClickCreate = (userId) => {
+		ReactGA.event({
+			category: "Button",
+			action: "Create new character"
+		})
 		navigate('/character/setting', {state:{userId:userId}})
 	}
 

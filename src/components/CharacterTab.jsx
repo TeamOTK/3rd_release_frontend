@@ -6,15 +6,25 @@ import { BiCommentDetail } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
 import { MdOutlinePersonOutline } from "react-icons/md";
 import { useState } from 'react';
+import ReactGA from "react-ga4";
+import { Button } from 'react-bootstrap';
 
 export default function CharacterTab(props){
 	const navigate = useNavigate();
 
 	const onClickViewSetting = (character) => {
+		ReactGA.event({
+			category: "Button",
+			action: "View character's option"
+		})
 		navigate('/character/setting', {state:{userId:props.realId, characterId:character.character_id}});
 	}
 	
 	async function onClickChat (character){
+		ReactGA.event({
+			category: "Button",
+			action: "Chat with other's character"
+		})
 		const params = { character_id: character.character_id }
 		await axios.get("http://13.209.167.220/chats/cntupdate", {params});
 		navigate('/warning', {state:{userId:props.realId, characterId:character.character_id, name:character.name, imgName:character.img}});

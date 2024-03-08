@@ -12,8 +12,8 @@ const RouteChangeTracker = () => {
 
   // 구글 애널리틱스 운영서버만 적용
   useEffect(() => {
-    if (process.env.REACT_APP_GOOGLE_ANALYTICS) {
-      ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS);
+    if (process.env.REACT_APP_GA_TRACKING_ID) {
+      ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
       setInitialized(true);
     }
   }, []);
