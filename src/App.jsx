@@ -9,12 +9,13 @@ import CharacterCommunity from './components/CharacterCommunity';
 import WarningPage from './components/WarningPage';
 import Chat from './components/chat/Chat';
 import CharacterSettingPage from './components/CharacterSettingPage';
+import RouteChangeTracker from './RouteChangeTracker';
 
 const App = () => {
+	RouteChangeTracker();
 
 	return (
 		<div className='App'>
-			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<HomePage />}></Route>
 					<Route path='/character' element={<CharacterCommunity/>}></Route>
@@ -23,7 +24,6 @@ const App = () => {
 					<Route path='/chat' element={<Chat/>}></Route>
 					<Route path="/*" element={<HomePage />}></Route>
 				</Routes>
-			</BrowserRouter>
 		</div>
 	);
 };
